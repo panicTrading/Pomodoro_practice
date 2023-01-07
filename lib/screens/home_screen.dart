@@ -29,6 +29,14 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void reset() {
+    setState(() {
+      isRunning = false;
+      totalSeconds = 1500;
+      _timer.cancel();
+    });
+  }
+
   void tickDown(Timer timer) {
     setState(() {
       totalSeconds -= 1;
@@ -76,16 +84,31 @@ class _HomeScreenState extends State<HomeScreen> {
             fit: FlexFit.tight,
             child: Container(
               alignment: const Alignment(0, -0.5),
-              child: IconButton(
-                iconSize: 100,
-                padding: EdgeInsets.zero,
-                onPressed: isRunning == true ? pause : playTimer,
-                icon: Icon(
-                  isRunning == true
-                      ? Icons.pause_circle_outline_rounded
-                      : Icons.play_circle_outlined,
-                  color: Theme.of(context).cardColor,
-                ),
+              child: Column(
+                children: [
+                  IconButton(
+                    iconSize: 100,
+                    padding: EdgeInsets.zero,
+                    onPressed: isRunning == true ? pause : playTimer,
+                    icon: Icon(
+                      isRunning == true
+                          ? Icons.pause_circle_outline_rounded
+                          : Icons.play_circle_outlined,
+                      color: Theme.of(context).cardColor,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: reset,
+                    child: Text(
+                      'reset',
+                      style: TextStyle(
+                        color: Theme.of(context).cardColor,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
